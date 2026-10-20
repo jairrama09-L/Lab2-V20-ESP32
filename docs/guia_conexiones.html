@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Guía de conexiones — V20 IoT</title>
+<style>
+@page{size:Letter;margin:13mm 12mm}
+*{box-sizing:border-box}
+body{font:9.6pt/1.38 "DejaVu Sans",Arial,sans-serif;color:#141c20;margin:0}
+h1{font-size:15pt;margin:0 0 2px}
+h2{font-size:11pt;margin:12px 0 5px;padding:3px 7px;background:#e7eef0;border-left:4px solid #0b7a83;break-after:avoid}
+h3{font-size:10pt;margin:8px 0 3px;break-after:avoid}
+p{margin:3px 0 6px}
+.sub{color:#555;font-size:9pt;margin-bottom:6px}
+table{border-collapse:collapse;width:100%;margin:3px 0 7px;break-inside:auto}
+tr{break-inside:avoid}
+th,td{border:1px solid #9aa6aa;padding:3px 5px;vertical-align:top;font-size:8.6pt}
+th{background:#f0f3f4;text-align:left}
+.m{font-family:"DejaVu Sans Mono",monospace;white-space:nowrap}
+.warn{border:1.5px solid #b3261e;padding:6px 9px;margin:7px 0;font-size:9pt}
+.warn b{color:#b3261e}
+.ok{border:1.5px solid #2e7d4f;padding:6px 9px;margin:7px 0;font-size:9pt}
+.esp{color:#2a63c9;font-weight:600} .v20{color:#a35c08;font-weight:600}
+.page{}
+svg{display:block;margin:6px auto}
+svg text{font-family:"DejaVu Sans Mono",monospace;font-size:10px;fill:#141c20}
+.chk{width:16px;text-align:center}
+</style></head><body>
+
+<div class="page">
+<h1>Extensión IoT del Lab 2 · Guía de conexiones</h1>
+<div class="sub">SINAMICS V20 + ESP32 · consigna AI1 aislada + mando por DI + estado por DO + corriente de fase con ACS712 + app móvil MQTT · Firmware <span class="m">v20_iot_esp32.ino</span> v3.1</div>
+
+<h2>1. Qué se agrega al circuito del Lab 2</h2>
+<table>
+<tr><th>Función</th><th>Del ESP32</th><th>Elemento de aislamiento</th><th>Al V20 / módulo</th></tr>
+<tr><td>Consigna 0–60 Hz</td><td class="m">GPIO25</td><td>6N137 + acondicionador (sin cambios)</td><td>AI1 borne <b>89</b>, 0V borne <b>92</b></td></tr>
+<tr><td>Marcha / paro</td><td class="m">GPIO26</td><td>Relé 1 (contacto seco)</td><td>DI1 borne <b>95</b></td></tr>
+<tr><td>Sentido (atrás)</td><td class="m">GPIO27</td><td>Relé 2</td><td>DI2 borne <b>96</b></td></tr>
+<tr><td>Reconocer falla</td><td class="m">GPIO32</td><td>Relé 3</td><td>DI3 borne <b>97</b></td></tr>
+<tr><td>V20 en marcha (entrada)</td><td class="m">GPIO35</td><td>Transistor DO1 del V20 (aislado 500 V)</td><td>DO1 bornes <b>102 / 103</b></td></tr>
+<tr><td>V20 en falla (entrada)</td><td class="m">GPIO33</td><td>Relé DO2 del V20 (aislado 4 kV)</td><td>DO2 bornes <b>105 / 106</b></td></tr>
+<tr><td>Corriente fase U</td><td class="m">GPIO34</td><td>ACS712 (efecto Hall, aislado)</td><td>Entre borne <b>83</b> (V20 U) y borne <b>1</b> (motor U1)</td></tr>
+</table>
+<p><b>Materiales nuevos:</b> módulo de relés <b>electromecánicos</b> de 5 V de 2 o 4 canales (los azules tipo SRD-05VDC), 4 × 10 kΩ, 1 × 1 kΩ, 1 × 22 nF (223) y el ACS712 del Lab 1. La versión de <b>5 A</b> del ACS712 es mejor que la de 30 A: da 185 mV/A, 2,8 veces más señal.</p>
+<div class="warn"><b>No sirve el módulo de relés de estado sólido del Lab 1</b> (G3MB-202P y similares): su salida es un triac para corriente alterna y no conmuta bien los 24 V de corriente continua de las entradas del V20. <b>Tampoco sirve el 6N137 para los DI:</b> su salida soporta como máximo 7 V y el V20 trabaja con 24 V. El 6N137 sigue solo en la consigna.</div>
+
+<h2>2. Esquema de un canal de mando (DI) y de las entradas de estado</h2>
+<svg width="700" height="175" viewBox="0 0 700 175" role="img" aria-label="Relé del módulo conectando 24 V del V20 a DI1, y salidas DO1 y DO2 del V20 hacia el ESP32">
+  <line x1="330" y1="10" x2="330" y2="165" stroke="#777" stroke-dasharray="5 4"/>
+  <text x="230" y="20" fill="#2a63c9">lado ESP32</text><text x="340" y="20" fill="#a35c08">lado V20 (24 V / 0V)</text>
+  <text x="10" y="55">GPIO26 ─┬─ IN1 del módulo</text><text x="10" y="72">10 kΩ a 3,3 V ┘</text>
+  <text x="10" y="94">5 V (VIN) → VCC · GND → GND</text>
+  <rect x="200" y="38" width="110" height="64" fill="none" stroke="#000"/><text x="214" y="34">módulo de relés</text>
+  <text x="208" y="58">bobina relé 1</text><text x="208" y="90">COM · NO · NC</text>
+  <line x1="310" y1="60" x2="460" y2="60" stroke="#000"/><text x="465" y="64">COM → borne 100 (24 V)</text>
+  <line x1="310" y1="86" x2="460" y2="86" stroke="#000"/><text x="465" y="90">NO  → borne 95 (DI1)</text>
+  <text x="380" y="114">DIC borne 99 → 0V borne 101 (modo PNP)</text>
+  <text x="10" y="142">GPIO35 (10 kΩ a 3,3 V) ←── borne 102 (DO1+) · borne 103 (DO1−) ──→ GND ESP32</text>
+  <text x="10" y="160">GPIO33 (pull-up interno) ← 1 kΩ ←── borne 105 (DO2 NO) · borne 106 (DO2 C) ──→ GND ESP32</text>
+</svg>
+<p>Los relés 2 y 3 son iguales al 1: <span class="m">GPIO27 → IN2</span>, contacto NO al borne 96, y <span class="m">GPIO32 → IN3</span>, contacto NO al borne 97. Los COM de los tres relés van al borne 100. Los contactos NC quedan libres.</p>
+
+<h2>3. Tabla de cableado pin a pin</h2>
+<table>
+<tr><th style="width:23%">Desde</th><th style="width:37%">Hasta</th><th>Nota</th><th class="chk">✓</th></tr>
+<tr><td class="esp">ESP32 GPIO26 / 27 / 32</td><td>IN1 / IN2 / IN3 del módulo de relés</td><td>Cada uno con 10 kΩ a 3,3 V: relés abiertos durante el reset</td><td class="chk">☐</td></tr>
+<tr><td class="esp">ESP32 VIN (5 V) y GND</td><td>VCC y GND del módulo de relés</td><td>Si el módulo tiene jumper JD-VCC, déjelo puesto</td><td class="chk">☐</td></tr>
+<tr><td class="v20">COM de relé 1, 2 y 3</td><td>Borne <b>100</b> (24 V del V20)</td><td>Un puente entre los tres COM</td><td class="chk">☐</td></tr>
+<tr><td class="v20">NO de relé 1 / 2 / 3</td><td>Bornes <b>95</b> (DI1) / <b>96</b> (DI2) / <b>97</b> (DI3)</td><td></td><td class="chk">☐</td></tr>
+<tr><td class="v20">Borne 99 (DI C)</td><td>Borne <b>101</b> (0V)</td><td>Entradas en modo PNP (activas con 24 V)</td><td class="chk">☐</td></tr>
+<tr><td class="esp">GPIO35</td><td>Borne <b>102</b> (DO1+) y 10 kΩ a 3,3 V</td><td>DO1 es polarizado: + hacia el ESP32</td><td class="chk">☐</td></tr>
+<tr><td class="esp">GND del ESP32</td><td>Borne <b>103</b> (DO1−)</td><td>El transistor de DO1 es libre de potencial</td><td class="chk">☐</td></tr>
+<tr><td class="esp">GPIO33</td><td>1 kΩ → borne <b>105</b> (DO2 NO)</td><td>Pull-up interno; el contacto cierra con falla</td><td class="chk">☐</td></tr>
+<tr><td class="esp">GND del ESP32</td><td>Borne <b>106</b> (DO2 común)</td><td>Contacto seco del relé del V20</td><td class="chk">☐</td></tr>
+<tr><td class="esp">ACS712 VCC / GND</td><td>5 V (VIN) / GND del ESP32</td><td></td><td class="chk">☐</td></tr>
+<tr><td class="esp">ACS712 OUT</td><td>10 kΩ → GPIO34; en GPIO34: 20 kΩ ∥ 22 nF a GND</td><td>El 22 nF (fc ≈ 1 kHz) quita la portadora PWM del V20</td><td class="chk">☐</td></tr>
+<tr><td class="v20">Borne 83 (V20 U)</td><td>ACS712 IP+ → IP− → borne <b>1</b> (motor U1)</td><td>Cable de potencia con terminales; nunca protoboard</td><td class="chk">☐</td></tr>
+<tr><td class="v20">Borne 84 / 85 (V20 V / W)</td><td>Borne 2 / 3 (motor V1 / W1)</td><td></td><td class="chk">☐</td></tr>
+<tr><td class="v20">Delta</td><td>Puentes 7–12, 8–10, 9–11</td><td>U1–W2, V1–U2, W1–V2</td><td class="chk">☐</td></tr>
+</table>
+<p><b>Comprobación de DO1:</b> con el V20 en marcha, GPIO35 debe medir menos de 0,5 V respecto a GND del ESP32. Si mide más, el transistor de DO1 no satura con 0,33 mA: ponga un PC817 entre DO1 y el ESP32 (LED con 2,2 kΩ desde el borne 100).</p>
+<p><b>Si el módulo se activa en ALTO</b> (algunos tienen jumper H/L), cambie en el firmware <span class="m">#define RELE_ACTIVO_BAJO 1</span> por <span class="m">0</span>.</p>
+
+<h2>4. Parámetros del V20 para el modo IoT</h2>
+<table>
+<tr><th>Parámetro</th><th>Valor</th><th>Función</th></tr>
+<tr><td class="m">P0700</td><td class="m">2</td><td>Órdenes por bornes (DI). El botón de marcha del panel queda inactivo.</td></tr>
+<tr><td class="m">P1000</td><td class="m">2</td><td>Consigna de frecuencia por AI1</td></tr>
+<tr><td class="m">P0701</td><td class="m">1</td><td>DI1: ON/OFF1 (marcha con P1120, paro con P1121)</td></tr>
+<tr><td class="m">P0702</td><td class="m">12</td><td>DI2: inversión de sentido</td></tr>
+<tr><td class="m">P0703</td><td class="m">9</td><td>DI3: reconocimiento de falla</td></tr>
+<tr><td class="m">P0731</td><td class="m">52.2</td><td>DO1: convertidor en marcha (fábrica: 52.3)</td></tr>
+<tr><td class="m">P0732</td><td class="m">52.3</td><td>DO2: falla activa (fábrica: 52.7)</td></tr>
+<tr><td class="m">P0756[0] … P0760[0], P2000</td><td class="m">igual que la guía</td><td>Escalado de AI1; P0759[0] = r0752 con consigna de 60 Hz</td></tr>
+<tr><td class="m">r0722</td><td class="m">lectura</td><td>Estado de las entradas digitales: sirve para comprobar cada DI</td></tr>
+</table>
+<p>Valores verificados contra las tablas de macros de conexión del manual del V20 (Cn002: P0701 = 1, P0702 = 12, P0703 = 9; Cn001/Cn002: P0731 = 52.2, P0732 = 52.3). Confirme la lista completa en el capítulo de parámetros según el firmware del variador.</p>
+
+<h2>5. Pruebas antes de arrancar el motor (en este orden)</h2>
+<table>
+<tr><th>#</th><th>Prueba</th><th>Resultado esperado</th><th class="chk">✓</th></tr>
+<tr><td>1</td><td>Breaker OFF. Continuidad entre GND del ESP32 y borne 101 (0V)</td><td>Abierto (OL). Si marca continuidad, algo une las tierras</td><td class="chk">☐</td></tr>
+<tr><td>2</td><td>Breaker ON, motor sin orden. App → "Conexión al broker" → Conectar</td><td>Chips "broker: conectado" y "ESP32: en línea"; estado FALLO con "RETORNO ALIMENTACION"</td><td class="chk">☐</td></tr>
+<tr><td>3</td><td>RESET en la app; mirar r0722 en el V20</td><td>Estado DETENIDO; durante 0,3 s r0722 muestra DI3 activa</td><td class="chk">☐</td></tr>
+<tr><td>4</td><td>Con consigna 0 Hz: MARCHA y PARO desde la app; escuchar el relé 1 y medir entre borne 95 y 101</td><td>≈ 24 V con marcha; 0 V con paro. r0722 muestra DI1</td><td class="chk">☐</td></tr>
+<tr><td>5</td><td>Consigna 30 Hz y MARCHA</td><td>Motor acelera en 5 s (P1120 = 10 s); LED "V20 en marcha" encendido; corriente en la app ≈ r0027</td><td class="chk">☐</td></tr>
+<tr><td>6</td><td>Atrás con el motor en marcha</td><td>Aviso "SENTIDO RECHAZADO EN MARCHA"</td><td class="chk">☐</td></tr>
+<tr><td>7</td><td>PARO, esperar a 0 Hz, Atrás, MARCHA</td><td>El motor gira al revés; r0021 negativo</td><td class="chk">☐</td></tr>
+<tr><td>8</td><td>EMERGENCIA desde la app</td><td>DI1 abierto en menos de 0,1 s; el V20 desacelera con P1121; estado FALLO</td><td class="chk">☐</td></tr>
+<tr><td>9</td><td>Comparar la corriente de la app con r0027 a 15, 30, 45 y 60 Hz</td><td>Diferencia menor de 10 %; anotar para el informe</td><td class="chk">☐</td></tr>
+</table>
+
+<div class="warn"><b>Seguridad:</b> El ACS712 queda a la tensión de salida del variador (PWM de hasta ≈ 310 V de pico). Conéctelo con el breaker en OFF, con terminales atornillados y la tarjeta sobre base aislante. No conecte contactores al motor mientras el V20 lo alimenta. La EMERGENCIA de la app es una parada por software (OFF1 con rampa); la parada de seguridad sigue siendo el breaker del módulo.</div>
+
+<h2>6. Poner la app en el celular</h2>
+<ol>
+<li>Copie <span class="m">app/index.html</span> a la carpeta <span class="m">docs/</span> del repositorio de GitHub y active <b>Settings → Pages</b> con la rama main y la carpeta <span class="m">/docs</span>. Queda en <span class="m">https://usuario.github.io/repositorio/</span>. Otra opción: copiar <span class="m">index.html</span> al celular y abrirlo con Chrome.</li>
+<li>En HiveMQ Cloud, cree una credencial para la app (Access Management → nueva credencial con permiso de publicar y suscribir).</li>
+<li>En la app, abra "Conexión al broker": servidor del clúster, puerto <b>8884</b>, ruta <b>/mqtt</b>, TLS activado, usuario, contraseña y el mismo prefijo de <span class="m">credenciales.h</span> (por ejemplo <span class="m">jair/v20</span>).</li>
+<li>En Chrome: menú ⋮ → "Agregar a pantalla de inicio". Se abre como una app.</li>
+</ol>
+
+<h2>7. Qué publica y qué escucha el ESP32</h2>
+<table>
+<tr><th>Tópico</th><th>Sentido</th><th>Contenido</th></tr>
+<tr><td class="m">&lt;prefijo&gt;/cmd</td><td>app → ESP32</td><td>START, STOP, EMERGENCY, RESET, FWD, REV, PERFIL, PERFIL_STOP, CALIBRATE</td></tr>
+<tr><td class="m">&lt;prefijo&gt;/consigna</td><td>app → ESP32</td><td>Frecuencia en Hz (0–60)</td></tr>
+<tr><td class="m">&lt;prefijo&gt;/config</td><td>app → ESP32</td><td>rampa=, in=, fmin=, fmax=, vigilancia=</td></tr>
+<tr><td class="m">&lt;prefijo&gt;/estado</td><td>ESP32 → app</td><td>DETENIDO, MARCHA o FALLO (retenido)</td></tr>
+<tr><td class="m">&lt;prefijo&gt;/alarma</td><td>ESP32 → app</td><td>Causa de la falla (retenido)</td></tr>
+<tr><td class="m">&lt;prefijo&gt;/aviso</td><td>ESP32 → app</td><td>Órdenes rechazadas e información</td></tr>
+<tr><td class="m">&lt;prefijo&gt;/telemetria</td><td>ESP32 → app</td><td>JSON cada segundo con 26 variables</td></tr>
+<tr><td class="m">&lt;prefijo&gt;/online</td><td>ESP32 → app</td><td>ONLINE / OFFLINE (testamento)</td></tr>
+</table>
+</div>
+
+<h2>8. Protecciones que ejecuta el ESP32</h2>
+<table>
+<tr><th>Condición</th><th>Detección</th><th>Acción</th></tr>
+<tr><td>Reinicio del ESP32</td><td>Al arrancar</td><td>FALLO "RETORNO_ALIMENTACION": exige RESET</td></tr>
+<tr><td>Falla del V20</td><td>DO2 cerrado</td><td>FALLO "FALLA_V20"; RESET da pulso en DI3</td></tr>
+<tr><td>V20 sin energía o sin responder</td><td>DI1 activo y DO1 abierto durante 2 s</td><td>FALLO "V20_SIN_MARCHA"</td></tr>
+<tr><td>Fase abierta / motor desconectado</td><td>V20 en marcha &gt; 5 Hz e I &lt; máx(0,35 A; 0,15·In) durante 2 s</td><td>FALLO "PERDIDA_CORRIENTE_FASE"</td></tr>
+<tr><td>Sobrecorriente</td><td>I &gt; 2,5·In durante 0,5 s</td><td>FALLO "SOBRECORRIENTE"</td></tr>
+<tr><td>Sobrecarga</td><td>Imagen térmica I²t, τ = 300 s, disparo θ = 1,2</td><td>Advertencia a 0,9; FALLO "SOBRECARGA_I2T"; memoria térmica</td></tr>
+<tr><td>Sensor desconectado</td><td>Media de la salida fuera de 2,2–2,8 V</td><td>FALLO en marcha; impide arrancar</td></tr>
+<tr><td>Pérdida de red</td><td>Sin MQTT 10 s con marcha ordenada desde la app</td><td>FALLO "PERDIDA_COMUNICACION"</td></tr>
+<tr><td>Orden retenida</td><td>Órdenes en los 1,5 s posteriores a suscribirse</td><td>Se ignoran y se avisa</td></tr>
+<tr><td>Inversión en marcha</td><td>Orden FWD/REV con el motor girando</td><td>Se rechaza: evita frenado regenerativo sin resistencia</td></tr>
+</table>
+</body></html>
