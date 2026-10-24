@@ -1,0 +1,471 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1720" height="1120" viewBox="0 0 1720 1120"><rect x="0" y="0" width="1720" height="1120" fill="#fff"/>
+<text x="30" y="38" font-family='"DejaVu Sans",Arial,sans-serif' font-size="18" fill="#111" text-anchor="start" font-weight="bold">Control IoT del SINAMICS V20 con ESP32 — esquemático completo (versión con optoacopladores PC817)</text>
+<text x="30" y="60" font-family='"DejaVu Sans",Arial,sans-serif' font-size="11" fill="#555" text-anchor="start">Lab. 2 · Electrónica de Potencia · Universidad del Magdalena · firmware v20_iot_esp32.ino v3.2 · bornes según "Tabla de Conexiones de Módulos de Entrenamiento"</text>
+<rect x="1300" y="22" width="390" height="44" fill="#fff" stroke="#bbb"/>
+<rect x="1310" y="27" width="118.0" height="17" rx="3" fill="#fff" stroke="#2a63c9" stroke-width="1.2"/>
+<text x="1369.0" y="40" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#2a63c9" text-anchor="middle" font-weight="bold">GND ESP32 / USB</text>
+<rect x="1460" y="27" width="182.8" height="17" rx="3" fill="#fff" stroke="#b8690b" stroke-width="1.2"/>
+<text x="1551.4" y="40" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#b8690b" text-anchor="middle" font-weight="bold">0V del V20 + fuente ext.</text>
+<text x="1310" y="60" font-family='"DejaVu Sans",Arial,sans-serif' font-size="10" fill="#555" text-anchor="start">Los dos dominios de tierra NO se unen nunca.</text>
+<rect x="60" y="110" width="190" height="960" rx="6" fill="#eef3fd" stroke="#2a63c9" stroke-width="2"/>
+<text x="155.0" y="140" font-family='"DejaVu Sans",Arial,sans-serif' font-size="18" fill="#2a63c9" text-anchor="middle" font-weight="bold">ESP32</text>
+<text x="155.0" y="158" font-family='"DejaVu Sans",Arial,sans-serif' font-size="11" fill="#2a63c9" text-anchor="middle">DevKit V1</text>
+<text x="242" y="194" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#111" text-anchor="end">3V3</text>
+<polyline points="250,190 264,190" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<text x="242" y="224" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#111" text-anchor="end">5V (VIN)</text>
+<polyline points="250,220 264,220" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<text x="242" y="254" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#111" text-anchor="end">GND</text>
+<polyline points="250,250 264,250" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<text x="242" y="304" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#111" text-anchor="end" font-weight="bold">GPIO25</text>
+<polyline points="250,300 264,300" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<text x="242" y="490" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#111" text-anchor="end" font-weight="bold">GPIO26</text>
+<polyline points="250,486 264,486" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<text x="242" y="570" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#111" text-anchor="end" font-weight="bold">GPIO27</text>
+<polyline points="250,566 264,566" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<text x="242" y="650" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#111" text-anchor="end" font-weight="bold">GPIO32</text>
+<polyline points="250,646 264,646" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<text x="242" y="790" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#111" text-anchor="end" font-weight="bold">GPIO35</text>
+<polyline points="250,786 264,786" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<text x="242" y="890" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#111" text-anchor="end" font-weight="bold">GPIO33</text>
+<polyline points="250,886 264,886" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<text x="242" y="1014" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#111" text-anchor="end" font-weight="bold">GPIO34</text>
+<polyline points="250,1010 264,1010" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<rect x="266" y="181" width="31.6" height="17" rx="3" fill="#fff" stroke="#2a63c9" stroke-width="1.2"/>
+<text x="281.8" y="194" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#2a63c9" text-anchor="middle" font-weight="bold">3V3</text>
+<polyline points="264,250 280,250" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<polyline points="280,250 280,258" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<polyline points="271,258 289,258" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="274,262 286,262" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="277,266 283,266" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<text x="70" y="1050" font-family='"DejaVu Sans",Arial,sans-serif' font-size="9" fill="#2a63c9" text-anchor="start">USB: solo para programar,</text>
+<text x="70" y="1062" font-family='"DejaVu Sans",Arial,sans-serif' font-size="9" fill="#2a63c9" text-anchor="start">con J11 desconectado</text>
+<polyline points="264,220 340,220" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<circle cx="340" cy="220" r="5" fill="#fff" stroke="#2a63c9" stroke-width="1.8"/>
+<text x="334" y="214" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#2a63c9" text-anchor="end" font-weight="bold">+</text>
+<rect x="346" y="176" width="176" height="62" rx="4" fill="#fff" stroke="#2a63c9" stroke-width="1.5"/>
+<text x="434" y="192" font-family='"DejaVu Sans",Arial,sans-serif' font-size="10" fill="#2a63c9" text-anchor="middle" font-weight="bold">J11 · FUENTE 5 V DEL ESP32</text>
+<text x="354" y="208" font-family='"DejaVu Sans",Arial,sans-serif' font-size="9" fill="#111" text-anchor="start">+5V → VIN y ACS712 (J5)</text>
+<text x="354" y="221" font-family='"DejaVu Sans",Arial,sans-serif' font-size="9" fill="#111" text-anchor="start">(−) → GND del ESP32</text>
+<text x="354" y="234" font-family='"DejaVu Sans",Arial,sans-serif' font-size="9" fill="#b3261e" text-anchor="start">aparte de la fuente del V20</text>
+<polyline points="650,200 650,930" fill="none" stroke="#888" stroke-width="1.4" stroke-dasharray="7 6"/>
+<text x="656" y="214" font-family='"DejaVu Sans",Arial,sans-serif' font-size="10" fill="#777" text-anchor="start">barrera de aislamiento</text>
+<text x="600" y="214" font-family='"DejaVu Sans",Arial,sans-serif' font-size="10" fill="#2a63c9" text-anchor="end">lado ESP32</text>
+<text x="660" y="230" font-family='"DejaVu Sans",Arial,sans-serif' font-size="10" fill="#b8690b" text-anchor="start">lado V20</text>
+<rect x="1500" y="270" width="200" height="680" rx="6" fill="#fdf4e7" stroke="#b8690b" stroke-width="2"/>
+<text x="1600" y="292" font-family='"DejaVu Sans",Arial,sans-serif' font-size="14" fill="#b8690b" text-anchor="middle" font-weight="bold">SINAMICS V20</text>
+<text x="1600" y="307" font-family='"DejaVu Sans",Arial,sans-serif' font-size="9" fill="#b8690b" text-anchor="middle">bornes de control del módulo</text>
+<circle cx="1500" cy="330" r="5" fill="#fff" stroke="#b8690b" stroke-width="1.8"/>
+<text x="1510" y="334" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#b8690b" text-anchor="start" font-weight="bold">89</text>
+<text x="1540" y="334" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">AI1 (2)</text>
+<circle cx="1500" cy="380" r="5" fill="#fff" stroke="#b8690b" stroke-width="1.8"/>
+<text x="1510" y="384" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#b8690b" text-anchor="start" font-weight="bold">92</text>
+<text x="1540" y="384" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">0V analóg. (5)</text>
+<circle cx="1500" cy="460" r="5" fill="#fff" stroke="#b8690b" stroke-width="1.8"/>
+<text x="1510" y="464" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#b8690b" text-anchor="start" font-weight="bold">100</text>
+<text x="1540" y="464" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">+24 V (13)</text>
+<circle cx="1500" cy="514" r="5" fill="#fff" stroke="#b8690b" stroke-width="1.8"/>
+<text x="1510" y="518" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#b8690b" text-anchor="start" font-weight="bold">95</text>
+<text x="1540" y="518" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">DI1 (8)</text>
+<circle cx="1500" cy="594" r="5" fill="#fff" stroke="#b8690b" stroke-width="1.8"/>
+<text x="1510" y="598" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#b8690b" text-anchor="start" font-weight="bold">96</text>
+<text x="1540" y="598" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">DI2 (9)</text>
+<circle cx="1500" cy="674" r="5" fill="#fff" stroke="#b8690b" stroke-width="1.8"/>
+<text x="1510" y="678" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#b8690b" text-anchor="start" font-weight="bold">97</text>
+<text x="1540" y="678" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">DI3 (10)</text>
+<circle cx="1500" cy="710" r="5" fill="#fff" stroke="#b8690b" stroke-width="1.8"/>
+<text x="1510" y="714" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#b8690b" text-anchor="start" font-weight="bold">99</text>
+<text x="1540" y="714" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">DI C (12)</text>
+<circle cx="1500" cy="750" r="5" fill="#fff" stroke="#b8690b" stroke-width="1.8"/>
+<text x="1510" y="754" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#b8690b" text-anchor="start" font-weight="bold">101</text>
+<text x="1540" y="754" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">0V (14)</text>
+<circle cx="1500" cy="800" r="5" fill="#fff" stroke="#b8690b" stroke-width="1.8"/>
+<text x="1510" y="804" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#b8690b" text-anchor="start" font-weight="bold">102</text>
+<text x="1540" y="804" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">DO1+ (15)</text>
+<circle cx="1500" cy="850" r="5" fill="#fff" stroke="#b8690b" stroke-width="1.8"/>
+<text x="1510" y="854" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#b8690b" text-anchor="start" font-weight="bold">103</text>
+<text x="1540" y="854" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">DO1− (16)</text>
+<circle cx="1500" cy="886" r="5" fill="#fff" stroke="#b8690b" stroke-width="1.8"/>
+<text x="1510" y="890" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#b8690b" text-anchor="start" font-weight="bold">105</text>
+<text x="1540" y="890" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">DO2 NO (18)</text>
+<circle cx="1500" cy="920" r="5" fill="#fff" stroke="#b8690b" stroke-width="1.8"/>
+<text x="1510" y="924" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#b8690b" text-anchor="start" font-weight="bold">106</text>
+<text x="1540" y="924" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">DO2 C (19)</text>
+<text x="310" y="262" font-family='"DejaVu Sans",Arial,sans-serif' font-size="12" fill="#111" text-anchor="start" font-weight="bold">① CONSIGNA 0–10 V → AI1</text>
+<polyline points="264,300 290,300 290,286 330,286" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="330,286 357.0,286" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="393.0,286 420,286" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="357.0" y="280" width="36" height="12" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="375.0" y="276" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle">R1 220 Ω</text>
+<polyline points="420,286 560,286" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="560" y="258" width="180" height="96" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="650" y="252" font-family='"DejaVu Sans Mono",monospace' font-size="11" fill="#111" text-anchor="middle" font-weight="bold">6N137</text>
+<path d="M590,282 L606,282 L598,296 Z" fill="#111"/>
+<polyline points="590,296 606,296" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="560,286 575,286 575,274 598,274 598,282" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="598,296 598,322 560,322" fill="none" stroke="#111" stroke-width="1.6"/>
+<text x="556" y="280" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="end">2</text>
+<text x="556" y="318" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="end">3</text>
+<polyline points="540,322 560,322" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="540,322 540,336" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="540,336 540,344" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<polyline points="531,344 549,344" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="534,348 546,348" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="537,352 543,352" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<rect x="682" y="280" width="34" height="34" fill="none" stroke="#111" stroke-width="1.3"/>
+<text x="699" y="302" font-family='"DejaVu Sans Mono",monospace' font-size="12" fill="#111" text-anchor="middle">&amp;</text>
+<polyline points="740,268 760,268" fill="none" stroke="#111" stroke-width="1.6"/>
+<text x="744" y="265" font-family='"DejaVu Sans Mono",monospace' font-size="8" fill="#555" text-anchor="start">8</text>
+<polyline points="740,282 760,282" fill="none" stroke="#111" stroke-width="1.6"/>
+<text x="744" y="279" font-family='"DejaVu Sans Mono",monospace' font-size="8" fill="#555" text-anchor="start">7</text>
+<polyline points="740,308 760,308" fill="none" stroke="#111" stroke-width="1.6"/>
+<text x="744" y="305" font-family='"DejaVu Sans Mono",monospace' font-size="8" fill="#555" text-anchor="start">6</text>
+<polyline points="740,340 760,340" fill="none" stroke="#111" stroke-width="1.6"/>
+<text x="744" y="337" font-family='"DejaVu Sans Mono",monospace' font-size="8" fill="#555" text-anchor="start">5</text>
+<polyline points="760,268 760,282" fill="none" stroke="#111" stroke-width="1.6"/>
+<circle cx="760" cy="268" r="3.2" fill="#111"/>
+<polyline points="760,268 760,236" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="744" y="219" width="60.4" height="17" rx="3" fill="#fff" stroke="#b8690b" stroke-width="1.2"/>
+<text x="774.2" y="232" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#b8690b" text-anchor="middle" font-weight="bold">+5V EXT</text>
+<polyline points="760,340 760,352" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="760,352 760,360" fill="none" stroke="#b8690b" stroke-width="1.6"/>
+<polyline points="751,360 769,360" fill="none" stroke="#b8690b" stroke-width="2"/>
+<polyline points="754,364 766,364" fill="none" stroke="#b8690b" stroke-width="2"/>
+<polyline points="757,368 763,368" fill="none" stroke="#b8690b" stroke-width="2"/>
+<polyline points="760,308 850,308" fill="none" stroke="#111" stroke-width="1.6"/>
+<circle cx="850" cy="308" r="3.2" fill="#111"/>
+<polyline points="850,236 850,254.0" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="850,290.0 850,308" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="844" y="254.0" width="12" height="36" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="840" y="276.0" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="end">R2 1 kΩ</text>
+<rect x="834" y="219" width="60.4" height="17" rx="3" fill="#fff" stroke="#b8690b" stroke-width="1.2"/>
+<text x="864.2" y="232" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#b8690b" text-anchor="middle" font-weight="bold">+5V EXT</text>
+<polyline points="850,308 900,308" fill="none" stroke="#111" stroke-width="1.6"/>
+<path d="M900,288 L900,328 L936,308 Z" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<circle cx="941" cy="308" r="5" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="918" y="282" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle" font-weight="bold">74HC14</text>
+<text x="895" y="304" font-family='"DejaVu Sans Mono",monospace' font-size="8" fill="#555" text-anchor="end">1</text>
+<text x="950" y="304" font-family='"DejaVu Sans Mono",monospace' font-size="8" fill="#555" text-anchor="start">2</text>
+<polyline points="946,308 960,308" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="960,308 977.0,308" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="1013.0,308 1030,308" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="977.0" y="302" width="36" height="12" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="995.0" y="298" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle">R3 10 kΩ 1%</text>
+<polyline points="1030,308 1090,308" fill="none" stroke="#111" stroke-width="1.6"/>
+<circle cx="1050" cy="308" r="3.2" fill="#111"/>
+<polyline points="1050,308 1050,336.0" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="1050,344.0 1050,372" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="1039,336.0 1061,336.0" fill="none" stroke="#111" stroke-width="2"/>
+<polyline points="1039,344.0 1061,344.0" fill="none" stroke="#111" stroke-width="2"/>
+<text x="1035" y="344.0" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="end">C1 1 µF</text>
+<polyline points="1050,372 1050,380" fill="none" stroke="#b8690b" stroke-width="1.6"/>
+<polyline points="1041,380 1059,380" fill="none" stroke="#b8690b" stroke-width="2"/>
+<polyline points="1044,384 1056,384" fill="none" stroke="#b8690b" stroke-width="2"/>
+<polyline points="1047,388 1053,388" fill="none" stroke="#b8690b" stroke-width="2"/>
+<text x="1030" y="400" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="end">poliéster</text>
+<path d="M1090,276 L1090,356 L1160,316 Z" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="1100" y="300" font-family='"DejaVu Sans Mono",monospace' font-size="13" fill="#111" text-anchor="start">+</text>
+<text x="1101" y="342" font-family='"DejaVu Sans Mono",monospace' font-size="13" fill="#111" text-anchor="start">−</text>
+<text x="1110" y="270" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start" font-weight="bold">LM358</text>
+<text x="1086" y="304" font-family='"DejaVu Sans Mono",monospace' font-size="8" fill="#555" text-anchor="end">3</text>
+<text x="1086" y="344" font-family='"DejaVu Sans Mono",monospace' font-size="8" fill="#555" text-anchor="end">2</text>
+<text x="1166" y="312" font-family='"DejaVu Sans Mono",monospace' font-size="8" fill="#555" text-anchor="start">1</text>
+<polyline points="1090,340 1080,340 1080,395" fill="none" stroke="#111" stroke-width="1.6"/>
+<circle cx="1080" cy="395" r="3.2" fill="#111"/>
+<polyline points="1080,395 1080,397.0" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="1080,433.0 1080,435" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="1074" y="397.0" width="12" height="36" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="1090" y="419.0" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">Rg 10 kΩ 1%</text>
+<polyline points="1080,435 1080,443" fill="none" stroke="#b8690b" stroke-width="1.6"/>
+<polyline points="1071,443 1089,443" fill="none" stroke="#b8690b" stroke-width="2"/>
+<polyline points="1074,447 1086,447" fill="none" stroke="#b8690b" stroke-width="2"/>
+<polyline points="1077,451 1083,451" fill="none" stroke="#b8690b" stroke-width="2"/>
+<polyline points="1080,395 1112.0,395" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="1148.0,395 1180,395" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="1112.0" y="389" width="36" height="12" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="1130.0" y="385" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle">Rf 10 kΩ 1%</text>
+<polyline points="1180,395 1180,316" fill="none" stroke="#111" stroke-width="1.6"/>
+<circle cx="1180" cy="316" r="3.2" fill="#111"/>
+<polyline points="1160,316 1200,316" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="1125,296 1125,250" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="1110" y="233" width="67.6" height="17" rx="3" fill="#fff" stroke="#b8690b" stroke-width="1.2"/>
+<text x="1143.8" y="246" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#b8690b" text-anchor="middle" font-weight="bold">+12V EXT</text>
+<text x="1130" y="262" font-family='"DejaVu Sans Mono",monospace' font-size="8" fill="#555" text-anchor="start">8</text>
+<polyline points="1125,336 1125,360" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="1125,360 1125,368" fill="none" stroke="#b8690b" stroke-width="1.6"/>
+<polyline points="1116,368 1134,368" fill="none" stroke="#b8690b" stroke-width="2"/>
+<polyline points="1119,372 1131,372" fill="none" stroke="#b8690b" stroke-width="2"/>
+<polyline points="1122,376 1128,376" fill="none" stroke="#b8690b" stroke-width="2"/>
+<text x="1130" y="354" font-family='"DejaVu Sans Mono",monospace' font-size="8" fill="#555" text-anchor="start">4</text>
+<polyline points="1200,316 1222.0,316" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="1258.0,316 1280,316" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="1222.0" y="310" width="36" height="12" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="1240.0" y="306" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle">R4 100 Ω</text>
+<polyline points="1280,316 1340,316 1340,330 1495,330" fill="none" stroke="#111" stroke-width="1.6"/>
+<circle cx="1310" cy="316" r="3.2" fill="#111"/>
+<polyline points="1310,316 1310,344" fill="none" stroke="#111" stroke-width="1.6"/>
+<path d="M1300,364 L1320,364 L1310,348 Z" fill="#111"/>
+<polyline points="1298,348 1322,348" fill="none" stroke="#111" stroke-width="2"/>
+<polyline points="1310,364 1310,380" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="1310,380 1310,388" fill="none" stroke="#b8690b" stroke-width="1.6"/>
+<polyline points="1301,388 1319,388" fill="none" stroke="#b8690b" stroke-width="2"/>
+<polyline points="1304,392 1316,392" fill="none" stroke="#b8690b" stroke-width="2"/>
+<polyline points="1307,396 1313,396" fill="none" stroke="#b8690b" stroke-width="2"/>
+<text x="1326" y="362" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">DZ 1N4742A</text>
+<text x="1326" y="375" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="start">12 V · 1 W</text>
+<text x="1200" y="430" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#555" text-anchor="start">V(AI1) = 2·5 V·D = 10·D [V]</text>
+<rect x="1250" y="110" width="200" height="88" rx="4" fill="#fff" stroke="#b8690b" stroke-width="1.5"/>
+<text x="1350" y="128" font-family='"DejaVu Sans",Arial,sans-serif' font-size="11" fill="#b8690b" text-anchor="middle" font-weight="bold">FUENTE EXTERNA</text>
+<text x="1262" y="148" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">+5 V → 6N137, 74HC14</text>
+<text x="1262" y="164" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">+12 V → LM358 (o 15 V)</text>
+<text x="1262" y="180" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">(−) común de ambas salidas</text>
+<polyline points="1450,185 1475,185 1475,380 1495,380" fill="none" stroke="#111" stroke-width="1.6"/>
+<text x="1458" y="200" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#b8690b" text-anchor="start">(−)</text>
+<text x="1262" y="214" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#b3261e" text-anchor="start">no conectar el borne de tierra física</text>
+<text x="310" y="452" font-family='"DejaVu Sans",Arial,sans-serif' font-size="12" fill="#111" text-anchor="start" font-weight="bold">② MANDO: marcha, atrás y reset por entradas digitales (modo PNP)</text>
+<polyline points="900,460 1495,460" fill="none" stroke="#111" stroke-width="1.6"/>
+<circle cx="900" cy="460" r="3.2" fill="#111"/>
+<text x="908" y="454" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#b8690b" text-anchor="start" font-weight="bold">+24 V del V20</text>
+<rect x="590" y="472" width="120" height="56" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="650" y="467" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle" font-weight="bold">PC817 #1 · MARCHA</text>
+<path d="M610,492 L626,492 L618,506 Z" fill="#111"/>
+<polyline points="610,506 626,506" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="590,486 618,486 618,492" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="618,506 618,514 590,514" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="630,498 640,498" fill="none" stroke="#111" stroke-width="1"/>
+<polyline points="630,504 640,504" fill="none" stroke="#111" stroke-width="1"/>
+<polyline points="676,490 676,510" fill="none" stroke="#111" stroke-width="2"/>
+<polyline points="676,496 690,486 710,486" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="676,504 690,514 710,514" fill="none" stroke="#111" stroke-width="1.6"/>
+<text x="586" y="482" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="end">A 1</text>
+<text x="586" y="526" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="end">K 2</text>
+<text x="714" y="482" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="start">4 C</text>
+<text x="714" y="526" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="start">3 E</text>
+<polyline points="264,486 300,486" fill="none" stroke="#111" stroke-width="1.6"/>
+<circle cx="300" cy="486" r="3.2" fill="#111"/>
+<polyline points="300,486 300,491.0" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="300,527.0 300,532" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="294" y="491.0" width="12" height="36" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="290" y="513.0" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="end">10 kΩ</text>
+<polyline points="300,532 300,540" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<polyline points="291,540 309,540" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="294,544 306,544" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="297,548 303,548" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="300,486 372.0,486" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="408.0,486 480,486" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="372.0" y="480" width="36" height="12" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="390.0" y="476" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle">220 Ω</text>
+<polyline points="480,486 590,486" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="590,514 560,514 560,520" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="560,520 560,528" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<polyline points="551,528 569,528" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="554,532 566,532" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="557,536 563,536" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="710,486 900,486" fill="none" stroke="#111" stroke-width="1.6"/>
+<circle cx="900" cy="486" r="3.2" fill="#111"/>
+<polyline points="710,514 1495,514" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="590" y="552" width="120" height="56" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="650" y="547" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle" font-weight="bold">PC817 #2 · ATRÁS</text>
+<path d="M610,572 L626,572 L618,586 Z" fill="#111"/>
+<polyline points="610,586 626,586" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="590,566 618,566 618,572" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="618,586 618,594 590,594" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="630,578 640,578" fill="none" stroke="#111" stroke-width="1"/>
+<polyline points="630,584 640,584" fill="none" stroke="#111" stroke-width="1"/>
+<polyline points="676,570 676,590" fill="none" stroke="#111" stroke-width="2"/>
+<polyline points="676,576 690,566 710,566" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="676,584 690,594 710,594" fill="none" stroke="#111" stroke-width="1.6"/>
+<text x="586" y="562" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="end">A 1</text>
+<text x="586" y="606" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="end">K 2</text>
+<text x="714" y="562" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="start">4 C</text>
+<text x="714" y="606" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="start">3 E</text>
+<polyline points="264,566 300,566" fill="none" stroke="#111" stroke-width="1.6"/>
+<circle cx="300" cy="566" r="3.2" fill="#111"/>
+<polyline points="300,566 300,571.0" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="300,607.0 300,612" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="294" y="571.0" width="12" height="36" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="290" y="593.0" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="end">10 kΩ</text>
+<polyline points="300,612 300,620" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<polyline points="291,620 309,620" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="294,624 306,624" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="297,628 303,628" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="300,566 372.0,566" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="408.0,566 480,566" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="372.0" y="560" width="36" height="12" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="390.0" y="556" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle">220 Ω</text>
+<polyline points="480,566 590,566" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="590,594 560,594 560,600" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="560,600 560,608" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<polyline points="551,608 569,608" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="554,612 566,612" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="557,616 563,616" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="710,566 900,566" fill="none" stroke="#111" stroke-width="1.6"/>
+<circle cx="900" cy="566" r="3.2" fill="#111"/>
+<polyline points="710,594 1495,594" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="590" y="632" width="120" height="56" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="650" y="627" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle" font-weight="bold">PC817 #3 · RESET</text>
+<path d="M610,652 L626,652 L618,666 Z" fill="#111"/>
+<polyline points="610,666 626,666" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="590,646 618,646 618,652" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="618,666 618,674 590,674" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="630,658 640,658" fill="none" stroke="#111" stroke-width="1"/>
+<polyline points="630,664 640,664" fill="none" stroke="#111" stroke-width="1"/>
+<polyline points="676,650 676,670" fill="none" stroke="#111" stroke-width="2"/>
+<polyline points="676,656 690,646 710,646" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="676,664 690,674 710,674" fill="none" stroke="#111" stroke-width="1.6"/>
+<text x="586" y="642" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="end">A 1</text>
+<text x="586" y="686" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="end">K 2</text>
+<text x="714" y="642" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="start">4 C</text>
+<text x="714" y="686" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="start">3 E</text>
+<polyline points="264,646 300,646" fill="none" stroke="#111" stroke-width="1.6"/>
+<circle cx="300" cy="646" r="3.2" fill="#111"/>
+<polyline points="300,646 300,651.0" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="300,687.0 300,692" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="294" y="651.0" width="12" height="36" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="290" y="673.0" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="end">10 kΩ</text>
+<polyline points="300,692 300,700" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<polyline points="291,700 309,700" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="294,704 306,704" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="297,708 303,708" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="300,646 372.0,646" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="408.0,646 480,646" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="372.0" y="640" width="36" height="12" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="390.0" y="636" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle">220 Ω</text>
+<polyline points="480,646 590,646" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="590,674 560,674 560,680" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="560,680 560,688" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<polyline points="551,688 569,688" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="554,692 566,692" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="557,696 563,696" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="710,646 900,646" fill="none" stroke="#111" stroke-width="1.6"/>
+<circle cx="900" cy="646" r="3.2" fill="#111"/>
+<polyline points="710,674 1495,674" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="900,460 900,786" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="1495,710 1470,710 1470,750 1495,750" fill="none" stroke="#111" stroke-width="1.6"/>
+<circle cx="1470" cy="750" r="3.2" fill="#111"/>
+<text x="1462" y="732" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#b8690b" text-anchor="end">puente DIC–0V</text>
+<text x="330" y="704" font-family='"DejaVu Sans",Arial,sans-serif' font-size="9" fill="#555" text-anchor="start">I LED ≈ (3,3 − 1,2) / 220 = 9,5 mA → ≥ 4,8 mA a la DI con CTR mín. 50 % · 10 kΩ a GND: LED apagado en el reset</text>
+<text x="310" y="728" font-family='"DejaVu Sans",Arial,sans-serif' font-size="12" fill="#111" text-anchor="start" font-weight="bold">③ ESTADO del V20: en marcha (DO1) y falla (DO2)</text>
+<rect x="590" y="772" width="120" height="56" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="650" y="767" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle" font-weight="bold">PC817 #4 · EN MARCHA</text>
+<path d="M674,792 L690,792 L682,806 Z" fill="#111"/>
+<polyline points="674,806 690,806" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="710,786 682,786 682,792" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="682,806 682,814 710,814" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="670,798 660,798" fill="none" stroke="#111" stroke-width="1"/>
+<polyline points="670,804 660,804" fill="none" stroke="#111" stroke-width="1"/>
+<polyline points="624,790 624,810" fill="none" stroke="#111" stroke-width="2"/>
+<polyline points="624,796 610,786 590,786" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="624,804 610,814 590,814" fill="none" stroke="#111" stroke-width="1.6"/>
+<text x="714" y="782" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="start">1 A</text>
+<text x="714" y="826" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="start">2 K</text>
+<text x="586" y="782" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="end">C 4</text>
+<text x="586" y="826" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#555" text-anchor="end">E 3</text>
+<polyline points="264,786 590,786" fill="none" stroke="#111" stroke-width="1.6"/>
+<circle cx="400" cy="786" r="3.2" fill="#111"/>
+<polyline points="400,786 400,749.0" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="400,785.0 400,748" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="394" y="749.0" width="12" height="36" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="410" y="771.0" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">10 kΩ</text>
+<rect x="384" y="735" width="31.6" height="17" rx="3" fill="#fff" stroke="#2a63c9" stroke-width="1.2"/>
+<text x="399.8" y="748" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#2a63c9" text-anchor="middle" font-weight="bold">3V3</text>
+<polyline points="590,814 560,814 560,820" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="560,820 560,828" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<polyline points="551,828 569,828" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="554,832 566,832" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="557,836 563,836" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="710,786 767.0,786" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="803.0,786 860,786" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="767.0" y="780" width="36" height="12" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="785.0" y="776" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle">R 2,2 kΩ ½ W</text>
+<polyline points="860,786 900,786" fill="none" stroke="#111" stroke-width="1.6"/>
+<circle cx="900" cy="786" r="3.2" fill="#111"/>
+<polyline points="710,814 980,814 980,800 1495,800" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="1495,850 1450,850 1450,750" fill="none" stroke="#111" stroke-width="1.6"/>
+<circle cx="1450" cy="750" r="3.2" fill="#111"/>
+<text x="1442" y="840" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#b8690b" text-anchor="end">DO1− a 0V</text>
+<text x="745" y="846" font-family='"DejaVu Sans",Arial,sans-serif' font-size="9" fill="#555" text-anchor="start">LED alimentado desde +24 V a través del transistor DO1</text>
+<polyline points="264,886 330,886" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="330,886 367.0,886" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="403.0,886 440,886" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="367.0" y="880" width="36" height="12" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="385.0" y="876" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle">1 kΩ</text>
+<polyline points="440,886 1495,886" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="1495,920 480,920 480,930" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="480,930 480,938" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<polyline points="471,938 489,938" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="474,942 486,942" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="477,946 483,946" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<text x="500" y="912" font-family='"DejaVu Sans",Arial,sans-serif' font-size="9" fill="#555" text-anchor="start">contacto seco del relé DO2 (aislado 4 kV dentro del V20) · GPIO33 con pull-up interno</text>
+<text x="310" y="965" font-family='"DejaVu Sans",Arial,sans-serif' font-size="12" fill="#111" text-anchor="start" font-weight="bold">④ CORRIENTE DE FASE (ACS712) Y POTENCIA</text>
+<polyline points="264,1010 520,1010" fill="none" stroke="#111" stroke-width="1.6"/>
+<circle cx="470" cy="1010" r="3.2" fill="#111"/>
+<polyline points="470,1010 470,1020.0" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="470,1056.0 470,1066" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="464" y="1020.0" width="12" height="36" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="460" y="1042.0" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="end">20 kΩ</text>
+<polyline points="470,1066 470,1074" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<polyline points="461,1074 479,1074" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="464,1078 476,1078" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="467,1082 473,1082" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="520,1010 520,1034.0" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="520,1042.0 520,1066" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="509,1034.0 531,1034.0" fill="none" stroke="#111" stroke-width="2"/>
+<polyline points="509,1042.0 531,1042.0" fill="none" stroke="#111" stroke-width="2"/>
+<text x="535" y="1042.0" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">22 nF</text>
+<polyline points="520,1066 520,1074" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<polyline points="511,1074 529,1074" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="514,1078 526,1078" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="517,1082 523,1082" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="470,1010 520,1010" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="520,1010 562.0,1010" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="598.0,1010 640,1010" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="562.0" y="1004" width="36" height="12" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="580.0" y="1000" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle">R 10 kΩ</text>
+<polyline points="640,1010 700,1010" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="700" y="968" width="150" height="96" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="775" y="962" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle" font-weight="bold">ACS712 (5 A rec.)</text>
+<polyline points="780,972 780,1060" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="706" y="989" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#111" text-anchor="start">VCC</text>
+<text x="706" y="1014" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#111" text-anchor="start">OUT</text>
+<text x="706" y="1044" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#111" text-anchor="start">GND</text>
+<polyline points="700,985 665,985" fill="none" stroke="#111" stroke-width="1.6"/>
+<rect x="612" y="976" width="53.2" height="17" rx="3" fill="#fff" stroke="#2a63c9" stroke-width="1.2"/>
+<text x="638.6" y="989" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#2a63c9" text-anchor="middle" font-weight="bold">5V J11</text>
+<polyline points="700,1040 680,1040 680,1048" fill="none" stroke="#111" stroke-width="1.6"/>
+<polyline points="680,1048 680,1056" fill="none" stroke="#2a63c9" stroke-width="1.6"/>
+<polyline points="671,1056 689,1056" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="674,1060 686,1060" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<polyline points="677,1064 683,1064" fill="none" stroke="#2a63c9" stroke-width="2"/>
+<text x="844" y="989" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#111" text-anchor="end">IP+</text>
+<text x="844" y="1044" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#111" text-anchor="end">IP−</text>
+<rect x="950" y="968" width="70" height="96" fill="#fdf4e7" stroke="#b8690b" stroke-width="1.5"/>
+<text x="985" y="962" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#b8690b" text-anchor="middle" font-weight="bold">V20 salida</text>
+<text x="985" y="989" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle">83 U</text>
+<text x="985" y="1019" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle">84 V</text>
+<text x="985" y="1049" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle">85 W</text>
+<polyline points="850,985 950,985" fill="none" stroke="#b3261e" stroke-width="2.4"/>
+<polyline points="850,1040 870,1040 870,1090 1150,1090 1150,985 1230,985" fill="none" stroke="#b3261e" stroke-width="2.4"/>
+<polyline points="1020,1015 1230,1015" fill="none" stroke="#b3261e" stroke-width="2.4"/>
+<polyline points="1020,1045 1230,1045" fill="none" stroke="#b3261e" stroke-width="2.4"/>
+<rect x="1230" y="968" width="250" height="110" rx="4" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="1355" y="960" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="middle" font-weight="bold">MOTOR 3φ 1 HP · 2 polos</text>
+<text x="1240" y="989" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">1  U1</text>
+<text x="1240" y="1019" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">2  V1</text>
+<text x="1240" y="1049" font-family='"DejaVu Sans Mono",monospace' font-size="10" fill="#111" text-anchor="start">3  W1</text>
+<text x="1300" y="990" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#111" text-anchor="start" font-weight="bold">DELTA (bornes 7–12):</text>
+<text x="1300" y="1006" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#111" text-anchor="start">7–12  U1–W2</text>
+<text x="1300" y="1020" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#111" text-anchor="start">8–10  V1–U2</text>
+<text x="1300" y="1034" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#111" text-anchor="start">9–11  W1–V2</text>
+<text x="1300" y="1058" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#b3261e" text-anchor="start">Tensión de red PWM</text>
+<text x="1300" y="1071" font-family='"DejaVu Sans Mono",monospace' font-size="9" fill="#b3261e" text-anchor="start">breaker en OFF</text>
+<text x="880" y="1104" font-family='"DejaVu Sans",Arial,sans-serif' font-size="9" fill="#b3261e" text-anchor="start">Potencia (rojo): cable con terminales, nunca protoboard</text>
+<text x="1500" y="972" font-family='"DejaVu Sans",Arial,sans-serif' font-size="8.5" fill="#111" text-anchor="start">Desacople: C2 100 nF en el 6N137 (8–5),</text>
+<text x="1500" y="985" font-family='"DejaVu Sans",Arial,sans-serif' font-size="8.5" fill="#111" text-anchor="start">lo pide su hoja de datos.</text>
+<text x="1500" y="998" font-family='"DejaVu Sans",Arial,sans-serif' font-size="8.5" fill="#111" text-anchor="start">74HC14 sin usar: entradas 3, 5 a 0V;</text>
+<text x="1500" y="1011" font-family='"DejaVu Sans",Arial,sans-serif' font-size="8.5" fill="#111" text-anchor="start">9, 11, 13 a +5V; salidas 4,6,8,10,12 libres.</text>
+<text x="1500" y="1024" font-family='"DejaVu Sans",Arial,sans-serif' font-size="8.5" fill="#111" text-anchor="start">LM358 unidad B sin usar: 5 a 0V,</text>
+<text x="1500" y="1037" font-family='"DejaVu Sans",Arial,sans-serif' font-size="8.5" fill="#111" text-anchor="start">6 unido a 7 (seguidor).</text>
+<text x="1500" y="1054" font-family='"DejaVu Sans",Arial,sans-serif' font-size="8.5" fill="#111" text-anchor="start" font-weight="bold">Parámetros V20: P0700=2 P1000=2</text>
+<text x="1500" y="1067" font-family='"DejaVu Sans",Arial,sans-serif' font-size="8.5" fill="#111" text-anchor="start" font-weight="bold">P0701=1 P0702=12 P0703=9</text>
+<text x="1500" y="1080" font-family='"DejaVu Sans",Arial,sans-serif' font-size="8.5" fill="#111" text-anchor="start" font-weight="bold">P0731=52.2 P0732=52.3</text>
+<text x="1500" y="1093" font-family='"DejaVu Sans",Arial,sans-serif' font-size="8.5" fill="#111" text-anchor="start" font-weight="bold">P0759 = r0752 con 60 Hz</text></svg>

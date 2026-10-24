@@ -31,7 +31,7 @@ unsigned long micros() {
 unsigned long millis() { return micros() / 1000UL; }
 
 // ------------------------------------------------------------ E/S --------
-static int salidas[40] = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};  // pull-ups
+static int salidas[40] = {0};  // pull-downs
 static int dutyPWM = 0;
 bool ledcSetup(int, uint32_t, int) { return true; }
 void ledcAttachPin(int, int) {}
@@ -63,9 +63,9 @@ static void actualizarPlanta() {
   if (dt <= 0) return;
   v20.tUltimo = t;
 #ifndef RELE_ACTIVO_BAJO
-#define RELE_ACTIVO_BAJO 1
+#define RELE_ACTIVO_BAJO 0
 #endif
-  // relé cerrado = 24 V en el DI
+  // opto/relé activo = 24 V en el DI
   bool di1 = salidas[26] != RELE_ACTIVO_BAJO, di2 = salidas[27] != RELE_ACTIVO_BAJO, di3 = salidas[32] != RELE_ACTIVO_BAJO;
   // DI3: flanco de subida con DI1 abierto reconoce la falla
   if (di3 && !v20.di3Prev && v20.falla && !di1) v20.falla = false;
@@ -204,3 +204,4 @@ int main() {
     std::this_thread::sleep_for(std::chrono::microseconds(40));
   }
 }
+int analogRead(int) { return 0; }

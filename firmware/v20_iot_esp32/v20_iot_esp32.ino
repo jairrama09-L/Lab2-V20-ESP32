@@ -5,14 +5,14 @@
  * -----------------------------------------------------------------------------
  *  Universidad del Magdalena · Ingeniería Electrónica · Electrónica de Potencia
  *  Laboratorio N.º 2 (extensión IoT) · Docente: Ing. Jordan D. Guillot Fula
- *  Versión 3.1 · Plataforma: ESP32 DevKit V1, núcleo Arduino-ESP32 2.0.x o 3.x
+ *  Versión 3.2 · Plataforma: ESP32 DevKit V1, núcleo Arduino-ESP32 2.0.x o 3.x
  *  Librería adicional: PubSubClient (Nick O'Leary)
  * -----------------------------------------------------------------------------
  *  QUÉ HACE
  *   1. Genera la consigna 0–10 V de AI1 con PWM de 20 kHz y 10 bits (igual que
  *      la Guía N.º 2): GPIO25 → 6N137 → 74HC14 → RC → LM358 → AI1.
  *   2. Manda marcha/paro, sentido y reconocimiento de falla por las entradas
- *      digitales DI1, DI2 y DI3 del V20, con un módulo de relés (contacto seco).
+ *      digitales DI1, DI2 y DI3 del V20, a través de optoacopladores PC817.
  *   3. Lee del V20 "en marcha" (DO1, transistor) y "falla activa" (DO2, relé).
  *   4. Mide la corriente RMS de una fase del motor con un ACS712.
  *   5. Publica todo por MQTT (HiveMQ Cloud, TLS) y recibe órdenes de la app.
@@ -32,22 +32,19 @@
  * -----------------------------------------------------------------------------
  *  MAPA DE PINES (ver guía de conexiones)
  *   GPIO25 → R 220 Ω → 6N137 (consigna PWM)
- *   GPIO26 → IN1 módulo de relés → contacto COM–NO: borne 100 (24 V) → DI1 (95)  MARCHA
- *   GPIO27 → IN2 módulo de relés → contacto COM–NO: borne 100 (24 V) → DI2 (96)  INVERSIÓN
- *   GPIO32 → IN3 módulo de relés → contacto COM–NO: borne 100 (24 V) → DI3 (97)  RECONOCER
- *            Módulo de relés electromecánicos de 5 V (contacto seco). Los módulos
- *            comunes se activan en BAJO: ver RELE_ACTIVO_BAJO. Pull-up de 10 kΩ a
- *            3,3 V en cada IN para que ningún relé cierre durante el reset.
- *            NO usar el módulo de relés de ESTADO SÓLIDO del Lab 1 (G3MB-202P):
- *            su salida es un triac de CA y no conmuta bien los 24 V CC del V20.
- *   GPIO35 ← DO1+ (borne 102); DO1− (borne 103) a GND del ESP32   EN MARCHA, activo en BAJO
- *            DO1 es un transistor aislado (500 V) y libre de potencial: actúa como
- *            interruptor sobre GPIO35. GPIO35 no tiene pull-up: 10 kΩ a 3,3 V obligatoria.
+ *   GPIO26 → 220 Ω → PC817 #1 (LED) | C: borne 100 (24 V) · E: DI1 borne 95   MARCHA
+ *   GPIO27 → 220 Ω → PC817 #2 (LED) | C: borne 100 (24 V) · E: DI2 borne 96   ATRÁS
+ *   GPIO32 → 220 Ω → PC817 #3 (LED) | C: borne 100 (24 V) · E: DI3 borne 97   RESET
+ *            Cátodos de los LED a GND del ESP32. Entradas en modo PNP: DIC (99) a 0V (101).
+ *            Salidas activas en ALTO: LED encendido = DI con 24 V (OPTO_ACTIVO_BAJO = 0).
+ *            NO usar relés de estado sólido de CA (G3MB-202P): no conmutan 24 V CC.
+ *   GPIO35 ← PC817 #4 (transistor) | LED: borne 100 → 2,2 kΩ → LED → DO1+ (102); DO1− (103) a 0V
+ *            EN MARCHA, activo en BAJO. GPIO35 no tiene pull-up: 10 kΩ a 3,3 V obligatoria.
  *   GPIO33 ← contacto NO del relé DO2 (borne 105; común 106 a GND)  FALLA, activo en BAJO
  *   GPIO34 ← ACS712: OUT → 10 kΩ → GPIO34 → 20 kΩ ∥ 22 nF → GND
  *   GPIO2  → LED de estado
- *  Con el ESP32 apagado o en reset los relés quedan abiertos (pull-ups) y el
- *  LED del 6N137 apagado: DI1 = 0 (paro) y AI1 = 0 V. Falla hacia el lado seguro.
+ *  Con el ESP32 apagado o en reset los LED de los optoacopladores quedan apagados
+ *  (pull-down de 10 kΩ): DI1 = 0 (paro) y AI1 = 0 V. Falla hacia el lado seguro.
  * =============================================================================
  */
 
@@ -57,6 +54,9 @@
 #include <math.h>
 #include <esp_system.h>
 #include "credenciales.h"
+#ifdef SIMULACION_WOKWI
+#include "planta_wokwi.h"   /* solo para simular en wokwi.com */
+#endif
 
 /* ============================ TÓPICOS MQTT ================================ */
 #define TOPIC_CMD         MQTT_PREFIJO "/cmd"         /* app → ESP32: órdenes        */
@@ -78,9 +78,10 @@ const uint8_t PIN_DO2    = 33;
 const uint8_t PIN_SENSOR = 34;
 const uint8_t PIN_LED    = 2;
 
-/* Módulo de relés: true si el relé cierra con nivel BAJO en su entrada (lo más común). */
+/* Salidas hacia los DI del V20. Con optoacopladores PC817 el LED se enciende con
+ * nivel ALTO (0). Si se usa un módulo de relés que se activa en BAJO, poner 1. */
 #ifndef RELE_ACTIVO_BAJO
-#define RELE_ACTIVO_BAJO 1
+#define RELE_ACTIVO_BAJO 0
 #endif
 const uint8_t RELE_ON  = RELE_ACTIVO_BAJO ? LOW : HIGH;
 const uint8_t RELE_OFF = RELE_ACTIVO_BAJO ? HIGH : LOW;
@@ -584,7 +585,11 @@ void callbackMQTT(char* topic, byte* payload, unsigned int len) {
 /* ========================================================================== */
 void iniciarWiFi() {
   WiFi.mode(WIFI_STA); WiFi.setAutoReconnect(true); WiFi.persistent(false);
+#ifdef WIFI_CANAL
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD, WIFI_CANAL);
+#else
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+#endif
   ultimoIntentoWiFi = millis();
 }
 
@@ -687,7 +692,7 @@ void actualizarLed() {
 /*  SETUP Y LOOP                                                              */
 /* ========================================================================== */
 void setup() {
-  /* Relés en reposo ANTES de habilitar las salidas: ningún DI del V20 se activa. */
+  /* Optoacopladores apagados ANTES de habilitar las salidas: ningún DI se activa. */
   digitalWrite(PIN_DI1, RELE_OFF); digitalWrite(PIN_DI2, RELE_OFF); digitalWrite(PIN_DI3, RELE_OFF);
   pinMode(PIN_DI1, OUTPUT); pinMode(PIN_DI2, OUTPUT); pinMode(PIN_DI3, OUTPUT);
   pinMode(PIN_LED, OUTPUT);
@@ -702,7 +707,7 @@ void setup() {
   analogSetPinAttenuation(PIN_SENSOR, ADC_11db);
 
   Serial.println();
-  Serial.println("=== V20 IoT v3.0 | consigna AI1 + DI/DO + ACS712 + MQTT ===");
+  Serial.println("=== V20 IoT v3.2 | consigna AI1 + DI/DO + ACS712 + MQTT ===");
   ayuda();
 
 #ifdef MQTT_CA_CERT

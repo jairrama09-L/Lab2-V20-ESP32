@@ -1,0 +1,369 @@
+{
+  "version": 1,
+  "author": "Lab 2 Electronica de Potencia - Unimagdalena",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_di1",
+      "top": -90,
+      "left": 230,
+      "attrs": {
+        "color": "limegreen",
+        "label": "DI1 MARCHA"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_di1",
+      "top": -10,
+      "left": 205,
+      "rotate": 90,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_di2",
+      "top": -90,
+      "left": 300,
+      "attrs": {
+        "color": "yellow",
+        "label": "DI2 ATRAS"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_di2",
+      "top": -10,
+      "left": 275,
+      "rotate": 90,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_di3",
+      "top": -90,
+      "left": 370,
+      "attrs": {
+        "color": "cyan",
+        "label": "DI3 RESET"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_di3",
+      "top": -10,
+      "left": 345,
+      "rotate": 90,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_pwm",
+      "top": -90,
+      "left": 440,
+      "attrs": {
+        "color": "white",
+        "label": "CONSIGNA PWM"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_pwm",
+      "top": -10,
+      "left": 415,
+      "rotate": 90,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_mar",
+      "top": -90,
+      "left": 510,
+      "attrs": {
+        "color": "green",
+        "label": "V20 EN MARCHA"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_mar",
+      "top": -10,
+      "left": 485,
+      "rotate": 90,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_fal",
+      "top": -90,
+      "left": 580,
+      "attrs": {
+        "color": "red",
+        "label": "V20 FALLA"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_fal",
+      "top": -10,
+      "left": 555,
+      "rotate": 90,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_falla",
+      "top": 120,
+      "left": 240,
+      "attrs": {
+        "color": "red",
+        "label": "FALLA V20"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw_red",
+      "top": 200,
+      "left": 250,
+      "attrs": {
+        "label": "CORTE DE RED"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw_fase",
+      "top": 270,
+      "left": 250,
+      "attrs": {
+        "label": "FASE ABIERTA"
+      }
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw_sensor",
+      "top": 340,
+      "left": 250,
+      "attrs": {
+        "label": "SENSOR DESCONECTADO"
+      }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot_carga",
+      "top": 220,
+      "left": 420,
+      "attrs": {
+        "label": "CARGA 0-3 A"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "esp:TX",
+      "$serialMonitor:RX",
+      "",
+      []
+    ],
+    [
+      "esp:RX",
+      "$serialMonitor:TX",
+      "",
+      []
+    ],
+    [
+      "esp:26",
+      "r_di1:1",
+      "green",
+      []
+    ],
+    [
+      "r_di1:2",
+      "led_di1:A",
+      "green",
+      []
+    ],
+    [
+      "led_di1:C",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+    [
+      "esp:27",
+      "r_di2:1",
+      "green",
+      []
+    ],
+    [
+      "r_di2:2",
+      "led_di2:A",
+      "green",
+      []
+    ],
+    [
+      "led_di2:C",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+    [
+      "esp:32",
+      "r_di3:1",
+      "green",
+      []
+    ],
+    [
+      "r_di3:2",
+      "led_di3:A",
+      "green",
+      []
+    ],
+    [
+      "led_di3:C",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+    [
+      "esp:25",
+      "r_pwm:1",
+      "green",
+      []
+    ],
+    [
+      "r_pwm:2",
+      "led_pwm:A",
+      "green",
+      []
+    ],
+    [
+      "led_pwm:C",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+    [
+      "esp:16",
+      "r_mar:1",
+      "green",
+      []
+    ],
+    [
+      "r_mar:2",
+      "led_mar:A",
+      "green",
+      []
+    ],
+    [
+      "led_mar:C",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+    [
+      "esp:17",
+      "r_fal:1",
+      "green",
+      []
+    ],
+    [
+      "r_fal:2",
+      "led_fal:A",
+      "green",
+      []
+    ],
+    [
+      "led_fal:C",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+    [
+      "btn_falla:1.l",
+      "esp:18",
+      "orange",
+      []
+    ],
+    [
+      "btn_falla:2.l",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+    [
+      "sw_red:2",
+      "esp:19",
+      "orange",
+      []
+    ],
+    [
+      "sw_red:1",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+    [
+      "sw_fase:2",
+      "esp:21",
+      "orange",
+      []
+    ],
+    [
+      "sw_fase:1",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+    [
+      "sw_sensor:2",
+      "esp:22",
+      "orange",
+      []
+    ],
+    [
+      "sw_sensor:1",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+    [
+      "pot_carga:VCC",
+      "esp:3V3",
+      "red",
+      []
+    ],
+    [
+      "pot_carga:GND",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+    [
+      "pot_carga:SIG",
+      "esp:VP",
+      "purple",
+      []
+    ]
+  ],
+  "dependencies": {}
+}
