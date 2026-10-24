@@ -1,28 +1,46 @@
-# Control IoT del SINAMICS V20 con ESP32 (extensión del Lab 2)
+# Control de velocidad del SINAMICS V20 con ESP32
 
-Desde la app del celular se manda el V20: marcha, paro, sentido, consigna de 0 a 60 Hz, reset de falla y emergencia. La app muestra la corriente de una fase medida con un ACS712 y el estado real del variador. El ESP32 ejecuta las protecciones aunque la app no esté conectada.
+Laboratorio N.º 2 · Electrónica de Potencia · Universidad del Magdalena (2026-II)
+Docente: Ing. Jordan Dallan Guillot Fula
+Autores: [nombre, código] · [nombre, código]
 
-```
-App (celular) ⇄ HiveMQ Cloud (MQTT/TLS) ⇄ ESP32 ─┬─ PWM → 6N137 → acondicionador → AI1 (borne 89)
-                                                 ├─ módulo de relés ×3 → DI1/DI2/DI3 (bornes 95/96/97)
-                                                 ├─ DO1 en marcha, directo a GPIO35 (bornes 102/103)
-                                                 ├─ relé DO2 falla (bornes 105/106)
-                                                 └─ ACS712 en la fase U (borne 83 → borne 1)
-```
+Un ESP32 genera la consigna 0–10 V de la entrada AI1 del V20 con un PWM de 20 kHz aislado por un 6N137, filtrado y amplificado. Esto reemplaza el potenciómetro. La extensión IoT agrega mando desde el celular (marcha, paro, sentido, reset y consigna), lectura del estado del V20 y corriente de una fase del motor con un ACS712.
 
-| Carpeta | Contenido |
+**App móvil:** https://USUARIO.github.io/Lab2-V20-ESP32/ (GitHub Pages, carpeta `docs/`)
+
+![Esquema del acondicionador](docs/figuras/esquema_acondicionador.png)
+
+## Contenido
+| Carpeta | Qué hay |
 |---|---|
-| `firmware/v20_iot_esp32/` | Firmware v3.1. Copie `credenciales_ejemplo.h` como `credenciales.h` y complételo. |
-| `app/index.html` | App web sin dependencias (MQTT sobre WebSocket). Para GitHub Pages, cópiela a `docs/index.html`. |
-| `docs/Guia_Conexiones_V20_IoT.pdf` | Cableado pin a pin, parámetros del V20, pruebas y protecciones. |
-| `sim/` | Simulación: firmware real + modelo del V20/motor + broker MQTT + app manejada con Playwright. |
-| `sim/resultados/Reporte_Simulacion_V20_IoT.pdf` | Resultado: 30 de 30 pruebas pasan. |
+| `firmware/consigna_pwm_v20/` | Firmware de la guía (v2): consigna por monitor serie |
+| `firmware/v20_iot_esp32/` | Firmware IoT (v3.2): consigna + PC817 a DI1–DI3 y DO1 + DO1/DO2 + ACS712 + MQTT |
+| `docs/esquematico/` | Esquemático completo (SVG, PNG, PDF con lista de materiales) |
+| `pcb/` | PCB una cara: PDF 1:1 para planchado, Gerber, netlist y verificador |
+| `docs/index.html` | App web (MQTT sobre WebSocket, sin librerías) |
+| `docs/Hoja_Laboratorio_Lab2.pdf` | Cableado del acondicionador, pruebas en banco y tablas |
+| `docs/Guia_Conexiones_V20_IoT.pdf` | Cableado IoT pin a pin, parámetros del V20, protecciones |
+| `calculos/` | Memoria de cálculo (fc, rizado, resolución, tolerancias) |
+| `analisis/` | Script que genera las gráficas y errores desde las tablas medidas |
+| `sim/` | Simulación: firmware real + modelo del V20 y motor + broker MQTT + app (30/30 pruebas) |
+| `wokwi/` | Proyecto para simular en wokwi.com con el V20 simulado y la app (ver LEEME_WOKWI.txt) |
+| `informe/` | Informe IEEE (borrador con la ampliación IoT; generar con `node build_informe_v3.js`) |
 
-## Parámetros del V20 (además de la puesta en marcha rápida y el escalado de AI1)
-P0700 = 2 · P1000 = 2 · P0701 = 1 · P0702 = 12 · P0703 = 9 · P0731 = 52.2 · P0732 = 52.3
+## Valores de diseño
+| Magnitud | Valor |
+|---|---|
+| Escala | V_AI1 = 10·D V → f = 60·D Hz |
+| Frecuencia de corte RC | 15,9 Hz |
+| Rizado máximo (D = 0,5) | 12,5 mVpp ≈ 0,075 Hz |
+| Resolución (10 bits) | 9,8 mV ≈ 0,059 Hz |
+| Establecimiento | 50 ms |
 
-## Compilar el firmware
-Arduino IDE, placa "ESP32 Dev Module", librería **PubSubClient**. Compila con el núcleo esp32 2.x o 3.x.
+## Parámetros del V20
+- **Guía:** P0700 = 1 · P1000 = 2 · P0756 = 0 · P0757 = 0 · P0758 = 0 · P0759 = r0752 a 60 Hz · P0760 = 100 · P2000 = 60
+- **Modo IoT (adicional):** P0700 = 2 · P0701 = 1 · P0702 = 12 · P0703 = 9 · P0731 = 52.2 · P0732 = 52.3
 
-## Consola serie (115 200 baudios, "Nueva línea")
-`0..60` consigna · `marcha` · `paro` · `emerg` · `reset` · `adelante` · `atras` · `p` perfil · `s` parar perfil · `cal` · `i` estado · `d` diagnóstico · `rampa=5` · `in=3.2` · `fmin=0` · `fmax=60` · `vigilancia=1`
+## Compilar
+Arduino IDE, placa "ESP32 Dev Module", librería PubSubClient. Para el firmware IoT, cree `credenciales.h` a partir de `credenciales_ejemplo.h`. Ese archivo no se sube al repositorio.
+
+## Resultados
+[Completar con las Tablas 1 a 3 medidas en el banco.]

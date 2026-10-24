@@ -1,0 +1,166 @@
+    0.01  
+    0.01  === V20 IoT v3.0 | consigna AI1 + DI/DO + ACS712 + MQTT ===
+    0.01  Consola: 0..60 (Hz) | marcha | paro | emerg | reset | adelante | atras
+    0.01           p (perfil) | s (para perfil, 0 Hz) | cal | i (estado) | d (diagnóstico)
+    0.01           rampa=5 | fmin=0 | fmax=60 | in=3.2 | vigilancia=1
+    0.01  Motivo del reinicio: 1
+    0.01  ESTADO FALLO | consigna 0.00 Hz (aplicada 0.00, AI1 0.000 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma SIN_ALARMA
+    0.01  ALARMA: RETORNO_ALIMENTACION
+    0.01  Calibración del ACS712 pendiente (espera motor parado)...
+    0.01  Conectando a MQTT... conectado.
+    0.56  ACS712: cero 2.5001 V | ruido 0.073 A | umbral 0.220 A
+    0.56  AVISO: ACS712_CALIBRADO
+    5.65  Reconociendo falla en el V20 (pulso DI3)...
+    5.95  ESTADO DETENIDO | consigna 0.00 Hz (aplicada 0.00, AI1 0.000 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma RETORNO_ALIMENTACION
+    5.95  ALARMA: SIN_ALARMA
+    5.95  Sistema rearmado.
+    6.13  Config rampa = 0.00
+    6.13  Config in = 3.00
+    6.13  Config fmin = 0.00
+    6.13  Config fmax = 60.00
+    6.13  Config vigilancia = 1.00
+    7.09  t=7084 ms | consigna 30.00 Hz (app)
+    8.15  ALARMA: SIN_ALARMA
+    8.15  ESTADO MARCHA | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ADELANTE | DI1=1 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma SIN_ALARMA
+    8.20  V20 EN MARCHA
+   16.72  t=16707 ms | consigna 60.00 Hz (app)
+   24.75  AVISO: SENTIDO_RECHAZADO_EN_MARCHA
+   24.81  ESTADO DETENIDO | consigna 60.00 Hz (aplicada 60.00, AI1 10.000 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=1 falla=0 | I=1.41 A | alarma SIN_ALARMA
+   34.86  V20 PARADO
+   35.09  Sentido: ATRAS
+   35.13  t=35123 ms | consigna 30.00 Hz (app)
+   35.66  ALARMA: SIN_ALARMA
+   35.66  ESTADO MARCHA | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ATRAS | DI1=1 DI2=1 | V20 marcha=0 falla=0 | I=0.00 A | alarma SIN_ALARMA
+   35.71  V20 EN MARCHA
+   43.18  ESTADO DETENIDO | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ATRAS | DI1=0 DI2=1 | V20 marcha=1 falla=0 | I=1.40 A | alarma SIN_ALARMA
+   48.24  V20 PARADO
+   49.13  Sentido: ADELANTE
+   50.17  ALARMA: SIN_ALARMA
+   50.17  ESTADO MARCHA | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ADELANTE | DI1=1 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma SIN_ALARMA
+   50.21  V20 EN MARCHA
+   55.18  [planta] FALLA
+   55.23  V20 PARADO
+   55.23  V20 falla ACTIVA
+   55.23  ESTADO FALLO | consigna 30.00 Hz (aplicada 30.00, AI1 0.000 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=0 falla=1 | I=1.67 A | alarma SIN_ALARMA
+   55.23  ALARMA: FALLA_V20
+   57.75  Reconociendo falla en el V20 (pulso DI3)...
+   57.80  V20 EN MARCHA
+   57.80  V20 falla despejada
+   58.05  ESTADO DETENIDO | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=1 falla=0 | I=0.88 A | alarma FALLA_V20
+   58.05  ALARMA: SIN_ALARMA
+   58.05  Sistema rearmado.
+   58.70  V20 PARADO
+   59.11  ALARMA: SIN_ALARMA
+   59.11  ESTADO MARCHA | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ADELANTE | DI1=1 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma SIN_ALARMA
+   59.16  V20 EN MARCHA
+   64.22  [planta] RED 0
+   64.27  V20 PARADO
+   66.27  ESTADO FALLO | consigna 30.00 Hz (aplicada 30.00, AI1 0.000 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma SIN_ALARMA
+   66.27  ALARMA: V20_SIN_MARCHA
+   67.02  [planta] RED 1
+   67.07  V20 EN MARCHA
+   67.84  V20 PARADO
+   68.07  Reconociendo falla en el V20 (pulso DI3)...
+   68.38  ESTADO DETENIDO | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma V20_SIN_MARCHA
+   68.38  ALARMA: SIN_ALARMA
+   68.38  Sistema rearmado.
+   69.13  ALARMA: SIN_ALARMA
+   69.13  ESTADO MARCHA | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ADELANTE | DI1=1 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma SIN_ALARMA
+   69.18  V20 EN MARCHA
+   76.15  [planta] FASE_ABIERTA 1
+   78.69  ESTADO FALLO | consigna 30.00 Hz (aplicada 30.00, AI1 0.000 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=1 falla=0 | I=0.00 A | alarma SIN_ALARMA
+   78.69  ALARMA: PERDIDA_CORRIENTE_FASE
+   79.06  [planta] FASE_ABIERTA 0
+   83.75  V20 PARADO
+   84.11  Reconociendo falla en el V20 (pulso DI3)...
+   84.41  ESTADO DETENIDO | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma PERDIDA_CORRIENTE_FASE
+   84.41  ALARMA: SIN_ALARMA
+   84.41  Sistema rearmado.
+   85.06  Config rampa = 0.00
+   85.06  Config in = 1.00
+   85.06  Config fmin = 0.00
+   85.06  Config fmax = 60.00
+   85.06  Config vigilancia = 1.00
+   86.10  ALARMA: SIN_ALARMA
+   86.10  ESTADO MARCHA | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ADELANTE | DI1=1 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma SIN_ALARMA
+   86.15  V20 EN MARCHA
+   91.11  [planta] CARGA 2.2
+   91.99  ESTADO FALLO | consigna 30.00 Hz (aplicada 30.00, AI1 0.000 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=1 falla=0 | I=2.61 A | alarma SIN_ALARMA
+   91.99  ALARMA: SOBRECORRIENTE
+   92.01  [planta] CARGA 0
+   97.05  V20 PARADO
+   98.11  AVISO: RESET_RECHAZADO_TERMICO
+  111.08  Reconociendo falla en el V20 (pulso DI3)...
+  111.38  ESTADO DETENIDO | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma SOBRECORRIENTE
+  111.38  ALARMA: SIN_ALARMA
+  111.38  Sistema rearmado.
+  112.14  ALARMA: SIN_ALARMA
+  112.14  ESTADO MARCHA | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ADELANTE | DI1=1 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma SIN_ALARMA
+  112.19  V20 EN MARCHA
+  117.73  ALARMA: ADVERTENCIA_TERMICA
+  127.63  ESTADO FALLO | consigna 30.00 Hz (aplicada 30.00, AI1 0.000 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=1 falla=0 | I=1.40 A | alarma ADVERTENCIA_TERMICA
+  127.63  ALARMA: SOBRECARGA_I2T
+  132.68  V20 PARADO
+  133.11  AVISO: RESET_RECHAZADO_TERMICO
+  159.04  Reconociendo falla en el V20 (pulso DI3)...
+  159.34  ESTADO DETENIDO | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma SOBRECARGA_I2T
+  159.34  ALARMA: SIN_ALARMA
+  159.34  Sistema rearmado.
+  160.10  Config rampa = 0.00
+  160.10  Config in = 3.00
+  160.10  Config fmin = 0.00
+  160.10  Config fmax = 60.00
+  160.10  Config vigilancia = 1.00
+  161.14  ALARMA: SIN_ALARMA
+  161.14  ESTADO MARCHA | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ADELANTE | DI1=1 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma SIN_ALARMA
+  161.19  V20 EN MARCHA
+  166.26  Enlace perdido en marcha remota...
+  176.26  ESTADO FALLO | consigna 30.00 Hz (aplicada 30.00, AI1 0.000 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=1 falla=0 | I=1.41 A | alarma SIN_ALARMA
+  176.26  ALARMA: PERDIDA_COMUNICACION
+  176.29  Conectando a MQTT... conectado.
+  181.31  V20 PARADO
+  185.83  Reconociendo falla en el V20 (pulso DI3)...
+  186.12  ESTADO DETENIDO | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma PERDIDA_COMUNICACION
+  186.12  ALARMA: SIN_ALARMA
+  186.12  Sistema rearmado.
+  187.33  Conectando a MQTT... conectado.
+  187.33  AVISO: ORDEN_IGNORADA_RECONEXION
+  191.33  AVISO: ORDEN_INVALIDA
+  191.38  ALARMA: SIN_ALARMA
+  191.38  ESTADO MARCHA | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ADELANTE | DI1=1 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma SIN_ALARMA
+  191.43  V20 EN MARCHA
+  196.53  ESTADO FALLO | consigna 30.00 Hz (aplicada 30.00, AI1 0.000 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=1 falla=0 | I=1.67 A | alarma SIN_ALARMA
+  196.53  ALARMA: PARADA_EMERGENCIA_APP
+  201.58  V20 PARADO
+  202.42  Reconociendo falla en el V20 (pulso DI3)...
+  202.72  ESTADO DETENIDO | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma PARADA_EMERGENCIA_APP
+  202.72  ALARMA: SIN_ALARMA
+  202.72  Sistema rearmado.
+  203.38  ALARMA: SIN_ALARMA
+  203.38  ESTADO MARCHA | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ADELANTE | DI1=1 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma SIN_ALARMA
+  203.43  V20 EN MARCHA
+  208.39  [planta] SENSOR 0
+  209.10  Sensor fuera de rango: media 0.000 V
+  209.10  ESTADO FALLO | consigna 30.00 Hz (aplicada 30.00, AI1 0.000 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=1 falla=0 | I=15.82 A | alarma SIN_ALARMA
+  209.10  ALARMA: FALLO_SENSOR_CORRIENTE
+  214.15  V20 PARADO
+  214.43  Reconociendo falla en el V20 (pulso DI3)...
+  214.72  ESTADO DETENIDO | consigna 30.00 Hz (aplicada 30.00, AI1 5.005 V) | ADELANTE | DI1=0 DI2=0 | V20 marcha=0 falla=0 | I=0.00 A | alarma FALLO_SENSOR_CORRIENTE
+  214.72  ALARMA: SENSOR_CORRIENTE_FALLA
+  214.72  Sistema rearmado.
+  215.48  AVISO: MARCHA_RECHAZADA_SENSOR
+  215.48  [planta] SENSOR 1
+  215.90  Sensor recuperado.
+  215.90  ALARMA: SIN_ALARMA
+  216.46  Config rampa = 10.00
+  216.46  Config in = 3.00
+  216.46  Config fmin = 0.00
+  216.46  Config fmax = 45.00
+  216.46  Config vigilancia = 1.00
+  217.51  t=217499 ms | consigna 60.00 Hz (app)
+  220.92  Config rampa = 0.00
+  220.92  Config in = 3.00
+  220.92  Config fmin = 0.00
+  220.92  Config fmax = 60.00
+  220.93  Config vigilancia = 1.00
+  220.97  t=220965 ms | consigna 0.00 Hz (app)
